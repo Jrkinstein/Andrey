@@ -242,7 +242,7 @@ if __name__ == "__main__":
             os.system("shutdown /h")
 
         elif 'сделай скриншот' in command:
-            ImageGrab.grab().save('Screenshots\screenshot.png')
+            ImageGrab.grab().save('Screenshots\screenshot.png') # сделать рандомную генерацию названия
 
         elif 'нагрузка на процессор' in command:
             cpu_percent = psutil.cpu_percent()
