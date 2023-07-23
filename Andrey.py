@@ -218,7 +218,7 @@ if __name__ == "__main__":
             subprocess.Popen('notepad.exe')
 
         elif 'открой браузер' in command:
-            webbrowser.open('www.google.com')
+            webbrowser.open('www.google.com') # сделать для разных браузеров 
 
         elif 'кто ты' in command:
             speak('Я Андрей')
@@ -229,8 +229,8 @@ if __name__ == "__main__":
         elif 'предыдущий трек' in command:
             playlist.player_prev()
 
-        elif 'открой сайт колледжа' in command:
-            webbrowser.open('https://mgkct.minskedu.gov.by/')
+        elif 'открой сайт мгкцт' in command:
+            webbrowser.open('https://mgkct.minskedu.gov.by/') 
 
         elif 'выключи компьютер' in command:
             os.system("shutdown /s /t 1")
