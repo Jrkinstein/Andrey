@@ -105,6 +105,7 @@ if __name__ == "__main__":
                   '// корень; '
                   '** степень; '
                   '% остаток')
+# изменить на голосовой ввод
             expr = input("Введите арифметическое выражение: ")
             result = eval(expr)
             print("Результат:", result)
@@ -290,6 +291,7 @@ if __name__ == "__main__":
                 if not location:
                     speak("В каком городе вы хотите узнать погоду?")
                     location = input("Введите местоположение: ")
+# изменить на голосовой ввод 
                 g = geocoder.osm(location)
                 lat, lon = g.latlng
                 url = f'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={APPID}&units=metric'
@@ -322,6 +324,7 @@ if __name__ == "__main__":
         elif 'таймер' in command:
             try:
                 seconds = int(input("Введите количество секунд: "))
+# изменить на голосовой ввод 
                 timer(seconds)
             except:
                 speak('Не удалось запустить таймер: некорректный ввод.')
