@@ -34,6 +34,7 @@ def timer(duration):
     speak("Время вышло!")
 
 # Функция для распознавания речи
+# Убрать конфликт русского и английского языков 
 def listen():
     r = sr.Recognizer()
     with sr.Microphone() as source:
