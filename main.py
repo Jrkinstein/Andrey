@@ -56,9 +56,10 @@ def recognize_speech():
         audio = r.listen(source)
         try:
             text = r.recognize_google(audio, language='ru-RU')
+            print(text)
             return text
         except:
-            return "Извините, я не понял."
+            return ""
 
 # Функция для обработки нажатия кнопки "Говорить"
 def on_speak_button_click():
@@ -82,7 +83,7 @@ def process_text(text):
     elif text == "пока":
         return "До свидания!"
 
-    elif text.lower() == "Открой ютуб" or "Открой YouTube":
+    elif text.lower() =="открой youtube":
         webbrowser.open('www.youtube.com')
         return "Открываю"
 
