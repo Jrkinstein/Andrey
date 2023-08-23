@@ -43,33 +43,40 @@ engine.setProperty('rate', 200)
 # Инициализация распознавателя речи
 r = sr.Recognizer()
 
+
 # Функция для увеличения громкости звука
 def volume_up():
     user32.PostMessageW(WPARAM(-1), WM_APPCOMMAND, 0, APPCOMMAND_VOLUME_UP * 0x10000)
+
 
 # Функция для уменьшения громкости звука
 def volume_down():
     user32.PostMessageW(WPARAM(-1), WM_APPCOMMAND, 0, APPCOMMAND_VOLUME_DOWN * 0x10000)
 
+
 # Функция для отключения звука
 def volume_mute():
     user32.PostMessageW(WPARAM(-1), WM_APPCOMMAND, 0, APPCOMMAND_VOLUME_MUTE * 0x10000)
+
 
 # Функция для запуска таймера на указанное количество секунд
 def start_timer(seconds):
     time.sleep(seconds)
     speak(f"Таймер на {seconds} секунд завершен.", 'ru-RU')
 
+
 # Функция для запуска секундомера
 def start_stopwatch():
     global stopwatch_start_time
     stopwatch_start_time = time.time()
+
 
 # Функция для остановки секундомера и вывода затраченного времени
 def stop_stopwatch():
     global stopwatch_start_time
     elapsed_time = time.time() - stopwatch_start_time
     speak(f"Секундомер остановлен. Затраченное время: {elapsed_time:.2f} секунд.", 'ru-RU')
+
 
 # Функция для поиска информации в Google по указанному запросу
 def search_google(query):
@@ -84,11 +91,13 @@ def search_google(query):
         results.append({'title': title, 'link': link, 'snippet': snippet})
     return results
 
+
 # Функция для запуска таймера
 def timer(duration):
     return f"Таймер запущен на {duration} секунд."
     time.sleep(duration)
     return "Время вышло!"
+
 
 # Функция для произношения текста
 def speak(text, language):
@@ -99,6 +108,7 @@ def speak(text, language):
         engine.setProperty('voice', 'en')
     engine.say(text)
     engine.runAndWait()
+
 
 # Функция для получения информации о погоде в указанном городе
 def get_weather(city):
@@ -113,6 +123,7 @@ def get_weather(city):
         return f"В городе {city} сейчас {temp} градусов по Цельсию и {description}."
     else:
         return f"Извините, я не смог получить информацию о погоде в городе {city}."
+
 
 # Функция для распознавания речи
 def recognize_speech():
@@ -133,17 +144,21 @@ def recognize_speech():
         except:
             return "Извините, я не понял.", 'ru-RU'
 
+
 # Функция для обработки нажатия кнопки "Говорить"
 def on_speak_button_click():
     while True:
         text, language = recognize_speech()
-        input_text.set(text)
+        # input_text.set(text)
         response = process_text(text, language)
         speak(response, language)
         if response == "До свидания!" or response == "Goodbye!":
             break
 
+
 steam_path = 'C:\Program Files (x86)\Steam\Steam.exe'
+
+
 # Функция для обработки текста и генерации ответа
 def process_text(text, language):
     # Токенизация текста и удаление стоп-слов
@@ -177,7 +192,7 @@ def process_text(text, language):
             os.startfile(app_command)
             return "Открываю"
 
-        elif 'фуру' in words or'етс' in words or 'ets' in words:
+        elif 'фуру' in words or 'етс' in words or 'ets' in words:
             app_command = f"steam://run/{227300}"
             os.startfile(steam_path, "open")
             os.startfile(app_command)
@@ -317,7 +332,7 @@ def process_text(text, language):
             os.system("shutdown /h")
 
         elif 'сделай' in words and 'скриншот' in words:
-            rand = random.randint(0,99999999999)
+            rand = random.randint(0, 99999999999)
             ImageGrab.grab().save(f'Screenshots\{rand}.png')
             return 'делаю'
 
@@ -365,17 +380,19 @@ def process_text(text, language):
         else:
             return "Sorry, I didn't understand."
 
+
 # Создание главного окна приложения
 root = Tk()
-root.title("Голосовой помощник Андрей")
-
-# Создание метки и поля ввода для отображения распознанного текста
-Label(root, text="Распознанный текст:").pack()
-input_text = StringVar()
-Entry(root, textvariable=input_text).pack()
+root.title("Андрей")
+root.iconbitmap('иконка.ico')
+root.geometry("300x300")
 
 # Создание кнопки "Говорить"
-Button(root, text="Говорить", command=on_speak_button_click).pack()
+loadimage = PhotoImage(file="кнопка.png")
+roundedbutton = Button(image=loadimage, command=on_speak_button_click)
+roundedbutton["bg"] = "white"
+roundedbutton["border"] = "0"
+roundedbutton.pack(side="top")
 
 # Запуск главного цикла приложения
 root.mainloop()
