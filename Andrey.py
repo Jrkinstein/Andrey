@@ -9,7 +9,6 @@ import subprocess
 import webbrowser
 import threading
 import requests
-import geocoder
 import datetime
 import pyttsx3
 import psutil
@@ -17,10 +16,8 @@ import GPUtil
 import random
 import ctypes
 import json
-import time
 import nltk
 import time
-import vlc
 import os
 
 global player
@@ -41,11 +38,6 @@ stop_words = set(stopwords.words(['russian', 'english']))
 # Инициализируем библиотеки
 listener = sr.Recognizer()
 engine = pyttsx3.init()
-# создаем экземпляр плеера
-instance = vlc.Instance()
-playlist = instance.media_list_new()
-player = vlc.MediaPlayer()
-mp3_files = []
 # Установка скорости речи
 engine.setProperty('rate', 200)
 # Инициализация распознавателя речи
@@ -151,14 +143,6 @@ def on_speak_button_click():
         if response == "До свидания!" or response == "Goodbye!":
             break
 
-for root, dirs, files in os.walk("."):  # сканирование текущей директории и всех поддиректорий
-    for file in files:
-        if file.endswith(".mp3"):
-            mp3_files.append(os.path.join(root, file))  # добавление пути к файлу в массив
-for file in mp3_files:
-    media = instance.media_new_path(file)
-    playlist.add_media(media)
-    player.set_media(media)
 steam_path = 'C:\Program Files (x86)\Steam\Steam.exe'
 # Функция для обработки текста и генерации ответа
 def process_text(text, language):
@@ -314,12 +298,6 @@ def process_text(text, language):
         elif 'кто' in words and 'ты' in words:
             return 'Я Андрей'
 
-        elif 'следующий' in words:
-            playlist.next()
-
-        elif 'предыдущий' in words:
-            playlist.player_prev()
-
         elif 'сколько' in words and 'времени' in words:
             now = datetime.datetime.now()
             return f"Текущее время: {now.strftime('%H:%M:%S')}"
@@ -343,16 +321,6 @@ def process_text(text, language):
             ImageGrab.grab().save(f'Screenshots\{rand}.png')
             return 'делаю'
 
-        elif 'музыку' in words:
-            if 'включи' in words:
-                player = instance.media_list_player_new()
-                player.set_media_list(playlist)
-                player.play()
-                return 'включаю'
-
-            elif 'выключи' in words or 'останови' in words:
-                playlist.stop()
-                return 'выключаю'
 
         elif 'нагрузка' in words:
             if 'процессор' in words:
