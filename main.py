@@ -159,9 +159,7 @@ for file in mp3_files:
     media = instance.media_new_path(file)
     playlist.add_media(media)
     player.set_media(media)
-file = open('steam_path.txt', 'r')
-steam_path = file.read()
-file.close()
+steam_path = 'C:\Program Files (x86)\Steam\Steam.exe'
 # Функция для обработки текста и генерации ответа
 def process_text(text, language):
     # Токенизация текста и удаление стоп-слов
