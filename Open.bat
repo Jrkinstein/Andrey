@@ -1,2 +1,2 @@
 @echo off
-python %~dp0main.py
+python %~dp0Andrey.py
