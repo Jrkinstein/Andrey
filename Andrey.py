@@ -21,7 +21,6 @@ import nltk
 import time
 import os
 
-global player
 # Инициализация библиотеки user32.dll
 user32 = ctypes.WinDLL('user32')
 # Определение типов данных WPARAM и LPARAM
