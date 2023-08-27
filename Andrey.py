@@ -1,5 +1,6 @@
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+from functools import lru_cache
 from bs4 import BeautifulSoup
 from ctypes import wintypes
 from PIL import ImageGrab
@@ -42,6 +43,7 @@ engine = pyttsx3.init()
 engine.setProperty('rate', 200)
 # Инициализация распознавателя речи
 r = sr.Recognizer()
+@lru_cache(maxsize=None)
 
 
 # Функция для увеличения громкости звука
