@@ -49,7 +49,6 @@ r = sr.Recognizer()
 
 # Функция для отправки текстового запроса к GPT-3 и получения ответа
 def generate_response(prompt):
-    openai.api_key = api_key
     response = openai.Completion.create(
         engine="davinci",  # Выбираем модель GPT-3 (другие варианты: "curie", "babbage")
         prompt=prompt,
