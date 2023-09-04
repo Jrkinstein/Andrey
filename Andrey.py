@@ -16,11 +16,14 @@ import psutil
 import GPUtil
 import random
 import ctypes
+import openai
 import json
 import nltk
 import time
 import os
 
+# Устанавливаем ваш API-ключ GPT-3
+openai.api_key = "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"
 # Инициализация библиотеки user32.dll
 user32 = ctypes.WinDLL('user32')
 # Определение типов данных WPARAM и LPARAM
@@ -44,6 +47,16 @@ engine.setProperty('rate', 200)
 r = sr.Recognizer()
 @lru_cache(maxsize=None)
 
+# Функция для отправки текстового запроса к GPT-3 и получения ответа
+def generate_response(prompt):
+    openai.api_key = api_key
+    response = openai.Completion.create(
+        engine="davinci",  # Выбираем модель GPT-3 (другие варианты: "curie", "babbage")
+        prompt=prompt,
+        max_tokens=100,  # Максимальная длина ответа
+        stop='стоп'  # Опционально: список фраз для завершения ответа
+    )
+    return response.choices[0].text
 
 # Функция для увеличения громкости звука
 def volume_up():
@@ -293,13 +306,18 @@ def process_text(text, language):
             except ValueError:
                 pass
 
-    if 'секундомер' in words:
+    elif 'секундомер' in words:
         if 'старт' in words:
             start_stopwatch()
             return "Секундомер запущен."
 
         elif 'стоп' in words:
             stop_stopwatch()
+
+    # Отправляем текстовой запрос к GPT-3
+    elif 'gpt' in words or 'помощник' in words:
+        response = generate_response(words)
+        return f"Помощник: {response}"
 
     if language == 'ru-RU':
         if 'привет' in words:
