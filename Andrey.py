@@ -412,5 +412,9 @@ roundedbutton["bg"] = "white"
 roundedbutton["border"] = "0"
 roundedbutton.pack(side="top")
 
+while True: 
+    if 'Андрей' in words:
+        on_speak_button_click
+
 # Запуск главного цикла приложения
 root.mainloop()
